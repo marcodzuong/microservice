@@ -1,0 +1,25 @@
+debug: true
+server:
+  port: 8083
+
+spring:
+  banner:
+    location: classpath:banner/banner.txt
+  application:
+    name: Medical App
+  datasource:
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/medical_db
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+redis:
+  host: cache
+  port: 6379
+
+
+jwt:
+  secret: heladslkasdaskdlasdjldasldaslkdasdlaskdalkdjlkasjldkjaslk
+  expiration: 36000
