@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/identity_db
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+# JWT config
+jwt:
+  secret: heladslkasdaskdlasdjldasldaslkdasdlaskdalkdjlkasjldkjaslk
+  expiration: 36000
+
+# Redis config
+redis:
+  host: cache
+  port: 6379
+
+debug: true

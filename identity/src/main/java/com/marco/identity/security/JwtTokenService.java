@@ -1,5 +1,6 @@
 package com.marco.identity.security;
 
+import com.marco.identity.entities.Authority;
 import com.marco.identity.entities.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtTokenService {
@@ -20,12 +22,15 @@ public class JwtTokenService {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
-    public String generateAccessToken(User user, String authorities) {
+    public String generateAccessToken(User user) {
+        String authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.joining(","));
+        long now = (new Date()).getTime();
+        Date validity = new Date(now + this.expiration);
         return Jwts.builder()
                 .setSubject(user.getUserName())
                 .claim(AUTHORITIES_KEY, authorities)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }

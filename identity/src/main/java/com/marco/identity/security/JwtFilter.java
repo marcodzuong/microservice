@@ -1,5 +1,8 @@
 package com.marco.identity.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marco.identity.api.CommonResult;
+import com.marco.identity.exception.ApiException;
 import com.marco.identity.util.HttpUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -7,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,23 +31,44 @@ import java.util.stream.Collectors;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtTokenService jwtTokenUtil;
+    private final ObjectMapper objectMapper;
 
-    public JwtFilter(JwtTokenService jwtTokenUtil) {
+    public JwtFilter(JwtTokenService jwtTokenUtil,
+                     ObjectMapper objectMapper) {
         this.jwtTokenUtil = jwtTokenUtil;
+        this.objectMapper = objectMapper;
     }
 
     @Override
     protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
-        String token = HttpUtil.getToken(request);
-        if (ObjectUtils.isEmpty(token)) {
+        try {
+            String token = HttpUtil.getToken(request);
+            if (!ObjectUtils.isEmpty(token) && jwtTokenUtil.validateAccessToken(token) ) {
+                String userName = jwtTokenUtil.getUserNameFromToken(token);
+                String authoritiesStr = jwtTokenUtil.getAuthorities(token);
+                setAuthenticationContext(userName, authoritiesStr, token,request);
+            }
             filterChain.doFilter(request, response);
-            return;
+        } catch (AuthenticationException e) {
+            setAuthenticationFail(response,true,null);
+        } catch (Exception e) {
+            setAuthenticationFail(response,false,e.getMessage());
         }
+    }
 
-        String userName = jwtTokenUtil.getUserNameFromToken(token);
-        String authoritiesStr = jwtTokenUtil.getAuthorities(token);
-        setAuthenticationContext(userName, authoritiesStr, token,request);
-        filterChain.doFilter(request, response);
+    private void setAuthenticationFail(HttpServletResponse response, boolean isAuth,String message) {
+        try {
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/json");
+            if (isAuth){
+                response.getWriter().write(objectMapper.writeValueAsString(CommonResult.unauthorized()));
+            }else {
+                response.getWriter().write(objectMapper.writeValueAsString(CommonResult.failed(message)));
+            }
+            response.getWriter().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setAuthenticationContext(String userName, String authoritiesStr, String token,HttpServletRequest request) {
