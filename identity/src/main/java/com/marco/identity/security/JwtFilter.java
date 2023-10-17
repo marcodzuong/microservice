@@ -2,11 +2,9 @@ package com.marco.identity.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marco.identity.api.CommonResult;
-import com.marco.identity.exception.ApiException;
 import com.marco.identity.util.HttpUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) {
         try {
             String token = HttpUtil.getToken(request);
             if (!ObjectUtils.isEmpty(token) && jwtTokenUtil.validateAccessToken(token) ) {

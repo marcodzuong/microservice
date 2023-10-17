@@ -1,8 +1,6 @@
 package com.marco.identity.controller;
 
 import com.marco.identity.api.CommonResult;
-import com.marco.identity.api.IErrorCode;
-import com.marco.identity.api.ResultCode;
 import com.marco.identity.dto.LoginDto;
 import com.marco.identity.entities.User;
 import com.marco.identity.exception.ApiException;
