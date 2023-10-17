@@ -1,8 +1,10 @@
 package com.marco.identity.service;
 
 import com.marco.identity.dto.LoginDto;
+import com.marco.identity.dto.UserDto;
 import com.marco.identity.entities.Authority;
 import com.marco.identity.entities.User;
+import com.marco.identity.exception.ApiException;
 import com.marco.identity.repository.AuthorityRepository;
 import com.marco.identity.repository.UserRepository;
 import com.marco.identity.security.AuthoritiesConstants;
@@ -75,7 +77,7 @@ public class UserService {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toSet());
-        }else {
+        } else {
             authorities = new HashSet<>();
             authorities.add(new Authority(AuthoritiesConstants.USER));
         }
@@ -84,4 +86,32 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
+    public User update(Long id, UserDto dto) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new ApiException("User Not Exit");
+        }
+        user.setAuthorities(
+                dto.getAuthorities()
+                        .stream()
+                        .map(authorityRepository::findById)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .collect(Collectors.toSet())
+        );
+        clearUserCaches(user.getUserName());
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public boolean deleteById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new ApiException("User Not Exit");
+        }
+        clearUserCaches(user.getUserName());
+        userRepository.delete(user);
+        return true;
+    }
 }
