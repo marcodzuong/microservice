@@ -1,9 +1,9 @@
 package com.marco.identity.controller;
 
-import com.marco.identity.api.CommonResult;
+import com.marco.identity.common.api.CommonResult;
 import com.marco.identity.dto.LoginDto;
 import com.marco.identity.entities.User;
-import com.marco.identity.exception.ApiException;
+import com.marco.identity.common.exception.ApiException;
 import com.marco.identity.security.JwtTokenService;
 import com.marco.identity.service.UserService;
 import jakarta.validation.Valid;

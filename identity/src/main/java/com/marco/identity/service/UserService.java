@@ -4,7 +4,7 @@ import com.marco.identity.dto.LoginDto;
 import com.marco.identity.dto.UserDto;
 import com.marco.identity.entities.Authority;
 import com.marco.identity.entities.User;
-import com.marco.identity.exception.ApiException;
+import com.marco.identity.common.exception.ApiException;
 import com.marco.identity.repository.AuthorityRepository;
 import com.marco.identity.repository.UserRepository;
 import com.marco.identity.security.AuthoritiesConstants;

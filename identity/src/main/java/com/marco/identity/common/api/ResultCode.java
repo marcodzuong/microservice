@@ -1,4 +1,4 @@
-package com.marco.identity.api;
+package com.marco.identity.common.api;
 
 import lombok.Getter;
 

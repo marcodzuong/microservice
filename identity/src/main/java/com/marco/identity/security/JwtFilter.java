@@ -1,7 +1,7 @@
 package com.marco.identity.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marco.identity.api.CommonResult;
+import com.marco.identity.common.api.CommonResult;
 import com.marco.identity.util.HttpUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;

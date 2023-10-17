@@ -1,7 +1,7 @@
 package com.marco.identity.config;
 
-import com.marco.identity.api.CommonResult;
-import com.marco.identity.exception.ApiException;
+import com.marco.identity.common.api.CommonResult;
+import com.marco.identity.common.exception.ApiException;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;

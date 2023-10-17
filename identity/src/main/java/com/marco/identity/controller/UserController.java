@@ -1,6 +1,6 @@
 package com.marco.identity.controller;
 
-import com.marco.identity.api.CommonResult;
+import com.marco.identity.common.api.CommonResult;
 import com.marco.identity.dto.UserDto;
 import com.marco.identity.security.AuthoritiesConstants;
 import com.marco.identity.service.UserService;

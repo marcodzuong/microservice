@@ -1,6 +1,6 @@
-package com.marco.identity.exception;
+package com.marco.identity.common.exception;
 
-import com.marco.identity.api.IErrorCode;
+import com.marco.identity.common.api.IErrorCode;
 
 public class ApiException extends RuntimeException {
 
