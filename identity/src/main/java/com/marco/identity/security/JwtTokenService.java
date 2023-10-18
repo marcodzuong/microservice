@@ -25,7 +25,7 @@ public class JwtTokenService {
     public String generateAccessToken(User user) {
         String authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.joining(","));
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.expiration);
+        Date validity = new Date(now + this.expiration * 3600* 1000);
         return Jwts.builder()
                 .setSubject(user.getUserName())
                 .claim(AUTHORITIES_KEY, authorities)

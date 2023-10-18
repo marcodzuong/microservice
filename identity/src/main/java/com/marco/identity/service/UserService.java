@@ -51,10 +51,10 @@ public class UserService {
                 .getCurrentUserLogin()
                 .flatMap(userRepository::findOneByUserName)
                 .ifPresent(user -> {
-                    if (!currentClearTextPassword.equals(user.getPassword())) {
-                        throw new RuntimeException("");
+                    if (!passwordEncoder.matches(currentClearTextPassword,user.getPassword())) {
+                        throw new ApiException("Current Password is invalid");
                     }
-                    user.setPassword(newPassword);
+                    user.setPassword(passwordEncoder.encode(newPassword));
                     clearUserCaches(user.getUserName());
                 });
     }

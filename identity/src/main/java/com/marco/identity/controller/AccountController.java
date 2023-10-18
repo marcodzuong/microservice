@@ -2,6 +2,7 @@ package com.marco.identity.controller;
 
 import com.marco.identity.common.api.CommonResult;
 import com.marco.identity.dto.LoginDto;
+import com.marco.identity.dto.PasswordChangeDTO;
 import com.marco.identity.entities.User;
 import com.marco.identity.common.exception.ApiException;
 import com.marco.identity.security.JwtTokenService;
@@ -9,10 +10,7 @@ import com.marco.identity.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +45,14 @@ public class AccountController {
         mapRes.put("token", jwtTokenService.generateAccessToken(user));
         return CommonResult.success(mapRes);
     }
+
+
+    @PostMapping("/change-password")
+    public Object changePassword(@RequestBody @Valid PasswordChangeDTO dto){
+        userService.changePassword(dto.getCurrentPassword(), dto.getNewPassword());
+        return CommonResult.success();
+    }
+
 
     @PostMapping("/register")
     public Object register(@RequestBody @Valid LoginDto request) {
