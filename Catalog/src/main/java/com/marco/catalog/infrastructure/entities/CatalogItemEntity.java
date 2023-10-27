@@ -10,11 +10,23 @@ public class CatalogItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Name;
-    private String Description;
+    @Column(name = "name", length = 200, nullable = false)
+    private String name;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "price")
     private Long Price;
-    private String PictureUri;
-    private String CatalogTypeId;
-    private String CatalogType;
+
+    @Column(name = "picture_uri")
+    private String pictureUri;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalog_brand_id")
+    private CatalogBrandEntity catalogBrand;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalog_type_id")
+    private CatalogTypeEntity catalogType;
 
 }

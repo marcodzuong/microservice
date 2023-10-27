@@ -10,6 +10,7 @@ public class CatalogBrandEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Brand;
+    @Column(name = "brand", length = 200, nullable = false)
+    private String brand;
 
 }

@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "catalog_type")
-public class CatalogTypeEntityType {
+public class CatalogTypeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String  Type;
+    @Column(name = "type", length = 200, nullable = false)
+    private String type;
+
 }
