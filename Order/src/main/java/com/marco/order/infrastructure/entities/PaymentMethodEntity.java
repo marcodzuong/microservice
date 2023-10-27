@@ -12,23 +12,23 @@ public class PaymentMethodEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "alias")
+    private String alias;
+
     @Column(name = "buyer_id")
-    private Long buyerId;
+    private Long buyerId;  // FK
 
     @Column(name = "card_holder_name")
     private String cardHolderName;
 
-    @Column(name = "alias")
-    private String alias;
-
     @Column(name = "card_number")
     private String cardNumber;
 
+    @OneToOne
+    @JoinColumn(name = "card_type_id")
+    private CardTypeEntity cardType;  // FK
     @Column(name = "expiration")
     private Date expiration;
 
-    @OneToOne
-    @JoinColumn(name = "card_type_id")
-    private CardTypeEntity cardType;
 
 }
