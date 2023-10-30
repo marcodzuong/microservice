@@ -7,5 +7,5 @@ public interface IOrderRepository extends IRepository<Order> {
 
     void update(Order order);
 
-    Order getById(int orderId);
+    Order getById(long orderId);
 }

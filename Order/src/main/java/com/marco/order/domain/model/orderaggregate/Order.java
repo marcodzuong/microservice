@@ -3,11 +3,13 @@ package com.marco.order.domain.model.orderaggregate;
 import com.marco.order.domain.model.Entity;
 import com.marco.order.domain.model.IAggregateRoot;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @Getter
+@Setter
 public class Order extends Entity implements IAggregateRoot {
 
     private Date orderDate;
