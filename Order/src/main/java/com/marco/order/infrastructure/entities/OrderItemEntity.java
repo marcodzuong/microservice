@@ -1,9 +1,15 @@
 package com.marco.order.infrastructure.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "order_items")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderItemEntity {
 
     @Id

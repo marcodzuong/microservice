@@ -1,12 +1,18 @@
 package com.marco.order.infrastructure.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderEntity {
 
     @Id
@@ -18,16 +24,14 @@ public class OrderEntity {
     private AddressEntity address;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "buyer_id")
-    private BuyerEntity buyer;
-
-    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_status_id")
     private OrderStatusEntity orderStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_method_id")
-    private PaymentMethodEntity paymentMethod;
+    @Column(name = "buyer_id")
+    private Long buyerId;
+
+    @Column(name = "payment_method_id")
+    private Long paymentMethodId;
 
     @CreatedDate
     @Column(name = "created_at")
