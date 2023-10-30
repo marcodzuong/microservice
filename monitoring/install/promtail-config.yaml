@@ -1,0 +1,40 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://10.148.0.4:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*log
+  - job_name: cowsay
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: frontend-out
+          __path__: /home/vagrant/.pm2/logs/frontend-out.log
+      - targets:
+          - localhost
+        labels:
+          job: frontend-error
+          __path__: /home/vagrant/.pm2/logs/frontend-error.log
+      - targets:
+          - localhost
+        labels:
+          job: api-out
+          __path__: /home/vagrant/.pm2/logs/api-out.log
+      - targets:
+          - localhost
+        labels:
+          job: api-error
+          __path__: /home/vagrant/.pm2/logs/api-error.log
