@@ -34,6 +34,10 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1' // Use the appropriate version
 
+    // actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.11.5'
+
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

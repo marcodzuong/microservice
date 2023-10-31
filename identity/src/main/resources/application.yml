@@ -1,7 +1,11 @@
 debug: true
 server:
-  port: 8083
-
+  port: 8081
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 spring:
   banner:
     location: classpath:banner/banner.txt
